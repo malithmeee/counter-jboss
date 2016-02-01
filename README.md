@@ -1,13 +1,30 @@
 # library
-Example for EJB3 + Jboss 5.1.0 GA + Maven + Mysql + JSF 2
+Example for EJB3 + Jboss 5.1.0 GA + Maven + Mysql + JSF 2 + AJAX
 
-# Try out URLs
+1 Make full build of the maven project
 
-Send jms message to queue
-curl -i -X GET http://localhost:8080/library.api/message
+2 Start two jboss instance
+Start JBOSS two instances with below commands
 
-Send rest API call with Json
-curl -i -H "Content-type: application/json" -X POST -d '{"name":"JSON"}' http://localhost:8080/library.api/library/book
+Instance 1 with port 8080
+    ./run.sh -c default
+Instance 2 with port 8180
+    ./run.sh -c standard -Djboss.service.binding.set=ports-01 -Djboss.messaging.ServerPeerID=1
 
-Try out UI with JSF (In web browser)
-http://localhost:8080/library.web/home.jsf
+3 Initiate queue call "CountQueue" on jboss instance 1
+
+4 Deploy counter.ear ear with EJBs to instance 1
+counter-jboss/ear/target/counter.ear
+
+5 Deploy the ear with client to instance 2
+counter-jboss/counter-ear/target/counter-client.ear
+
+6 Access the UI of instance 1 by below URL
+http://localhost:8080/counter.web/
+Click on RUN button - will start to send request to EJB Queue
+Click on Count button - will update current count
+Click on Stop - will stop sending queue requests.
+
+7 Access the UI of instance 2 by below ERL
+http://localhost:8180/counter.client/
+Click on Count button - will update current count

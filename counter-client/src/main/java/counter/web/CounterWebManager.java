@@ -34,7 +34,7 @@ public class CounterWebManager {
         hashtable.put(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
         try {
             ctx = new InitialContext(hashtable);
-            counterService = (RequestCountServiceLocal) ctx.lookup("counter/RequestCountService/local");
+            counterService = (RequestCountServiceLocal) ctx.lookup("counter/RequestCountService/remote");
         } catch (NamingException ex) {
             ex.printStackTrace();
         }

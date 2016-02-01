@@ -47,18 +47,18 @@
     </build>
 
     <dependencies>
-        <dependency>
+ <!--       <dependency>
             <groupId>counter</groupId>
             <artifactId>counter.ejb</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
-        </dependency>
-        <dependency>
+        </dependency>-->
+<!--        <dependency>
             <groupId>counter</groupId>
             <artifactId>counter.services</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>counter</groupId>
             <artifactId>counter.client</artifactId>

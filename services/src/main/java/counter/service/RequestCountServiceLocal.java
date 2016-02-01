@@ -15,7 +15,7 @@ package counter.service;
 import javax.ejb.*;
 import javax.ws.rs.*;
 
-@Local
+@Remote
 public interface RequestCountServiceLocal {
 
     int getRequestCount();
