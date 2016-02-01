@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <script src="js/jquery.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
+        var time;
+        function doAjax() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/counter.web/count',
+                data: $(this).serialize(),
+                success: function (data) {
+                    $('#outputMessage').val(data);// first set the value
+                },
+                complete: function (data) {
+                    // Schedule the next
+//                        setTimeout(doAjax, interval);
+                }
+            });
+            time = setTimeout(doAjax, interval);
+        }
+        function stopAjax() {
+            clearTimeout(time);
+            alert("Ajax request sending stopped...");
+        }
+    </script>
+</h:head>
+<h:body>
+    <h2>Ajax Example</h2>
+    <h:commandButton value="Run" onclick="doAjax()"/>
+    <hr/>
+    <h:form id="countForm">
+        <h:panelGrid columns="2">
+            <h:commandButton value="Count">
+                <f:ajax execute="countForm" render="countForm:outputMessage"/>
+            </h:commandButton>
+            <h:outputText id="outputMessage"
+                          value="#{requestCountManagement.count != null ? requestCountManagement.count : 0}"/>
+        </h:panelGrid>
+    </h:form>
+    <hr/>
+    <h:commandButton value="Stop" onclick="stopAjax()"/>
+</h:body>
+</html>

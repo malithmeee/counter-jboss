@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>library</groupId>
+        <artifactId>library</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>counter.ear</artifactId>
+    <packaging>ear</packaging>
+
+    <properties>
+        <project.build.name>counter</project.build.name>
+    </properties>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>../${project.build.name}/META-INF</targetPath>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <!--<includeLibInApplicationXml>true</includeLibInApplicationXml>-->
+                    <skinnyWars>true</skinnyWars>
+                    <version>5</version>
+                    <modules>
+                        <webModule>
+                            <groupId>counter</groupId>
+                            <artifactId>counter.web</artifactId>
+                            <bundleFileName>counter-web.war</bundleFileName>
+                        </webModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+        <finalName>${project.build.name}</finalName>
+    </build>
+
+    <dependencies>
+<!--        <dependency>
+            <groupId>library</groupId>
+            <artifactId>library.model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>-->
+        <dependency>
+            <groupId>counter</groupId>
+            <artifactId>counter.ejb</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>counter</groupId>
+            <artifactId>counter.services</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>counter</groupId>
+            <artifactId>counter.web</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+</project>
