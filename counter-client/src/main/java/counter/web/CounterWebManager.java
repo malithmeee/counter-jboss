@@ -17,6 +17,7 @@ import counter.service.*;
 import javax.annotation.*;
 import javax.faces.bean.*;
 import javax.naming.*;
+import java.io.*;
 import java.util.*;
 
 @ManagedBean
@@ -25,15 +26,22 @@ public class CounterWebManager {
 
     private InitialContext ctx;
     private RequestCountServiceLocal counterService;
+    private Properties props;
 
     @PostConstruct
     public void init() {
-        Hashtable hashtable = new Hashtable();
+        props = new Properties();
+        try {
+            props.load(Thread.currentThread().getContextClassLoader().getResource("jndi.properties").openStream());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+/*        Hashtable hashtable = new Hashtable();
         hashtable.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
         hashtable.put(Context.PROVIDER_URL, "jnp://localhost:1099");
-        hashtable.put(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");
+        hashtable.put(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");*/
         try {
-            ctx = new InitialContext(hashtable);
+            ctx = new InitialContext(props);
             counterService = (RequestCountServiceLocal) ctx.lookup("counter/RequestCountService/remote");
         } catch (NamingException ex) {
             ex.printStackTrace();
