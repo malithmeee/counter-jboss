@@ -26,22 +26,30 @@ public class CounterWebManager {
 
     private InitialContext ctx;
     private RequestCountServiceLocal counterService;
-    private Properties props;
 
     @PostConstruct
     public void init() {
-        props = new Properties();
+        Properties jndiProps = new Properties();
         try {
-            props.load(Thread.currentThread().getContextClassLoader().getResource("jndi.properties").openStream());
+            jndiProps.load(Thread.currentThread().getContextClassLoader().getResource("jndi.properties").openStream());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+
+        /*        jndiProps.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+        jndiProps.put(Context.PROVIDER_URL,"jnp://192.168.1.200:1199");
+        // username
+        jndiProps.put(Context.SECURITY_PRINCIPAL, "malith");
+        // password
+        jndiProps.put(Context.SECURITY_CREDENTIALS, "password");*/
+
 /*        Hashtable hashtable = new Hashtable();
         hashtable.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
         hashtable.put(Context.PROVIDER_URL, "jnp://localhost:1099");
         hashtable.put(Context.URL_PKG_PREFIXES, "org.jboss.naming:org.jnp.interfaces");*/
+
         try {
-            ctx = new InitialContext(props);
+            ctx = new InitialContext(jndiProps);
             counterService = (RequestCountServiceLocal) ctx.lookup("counter/RequestCountService/remote");
         } catch (NamingException ex) {
             ex.printStackTrace();

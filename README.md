@@ -28,3 +28,11 @@ Click on Stop - will stop sending queue requests.
 7 Access the UI of instance 2 by below ERL
 http://localhost:8180/counter.client/
 Click on Count button - will update current count
+
+Remote server-clint
+===================
+# Start the remote server (Instance 1) in separate machine
+./run.sh -c default -Djboss.service.binding.set=ports-01 -Djboss.messaging.ServerPeerID=1 -b 0.0.0.0 (For port 8180)
+./run.sh -c default -b 0.0.0.0 (For port 8080)
+
+# Start the client server as usual
